@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Posts = require("../data/db");
+router.use(express.json());
 // set up the router ///
 
 /// get requests first///
@@ -15,6 +16,10 @@ router.get("/", (req, res) => {
         .json({ error: "the post inforamtion could not be retrieved " });
     });
 });
+router.use(errorHandler);
+function errorHandler(error, req, res, next) {
+  res.status(500).json(error.message);
+}
 
 router.get("/:id", (req, res) => {
   const id = req.params.id;
